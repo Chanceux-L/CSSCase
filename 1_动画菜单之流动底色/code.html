@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1_动画菜单之流动底色</title>
+</head>
+<body>
+  <!-- 原文链接：https://www.bilibili.com/video/BV1me4y1M742/?spm_id_from=333.1007.tianma.1-1-1.click&vd_source=a8e867384d92e495e95b58bbf33f57b7 -->
+  <h1>1_动画菜单之流动底色</h1>
+  <main class="menu-box">
+    <div class="menu-item">Javascript</div>
+    <div class="menu-item active">CSS</div>
+    <div class="menu-item">Vue</div>
+    <div class="menu-item">React</div>
+    <div class="menu-item">Webpack</div>
+    <div class="menu-item">Node.js</div>
+  </main>
+</body>
+</html>
+
+<script>
+  (function() {
+    const menuBox = document.querySelector('.menu-box');
+    const activeMenuItem = menuBox.querySelector('.menu-box .active')
+
+    menuBox.insertAdjacentHTML('beforeend', '<div class="mask"></div>'); // insertAdjacentElement: 追加元素
+    const mask = menuBox.querySelector('.mask');
+
+    menuBox.querySelectorAll('.menu-item').forEach(itemElement => {
+      itemElement.addEventListener('mouseenter', (e) => {
+        const element = e.target;
+
+        mask.style.setProperty('left', `${element.offsetLeft}px`);
+        mask.style.setProperty('width', `${element.offsetWidth}px`);
+      });
+    });
+  })()
+</script>
+
+<style>
+  .menu-box {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 1fr);
+    grid-auto-flow: column;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #2A2B30;
+    border-radius: 14px;
+    padding: 10px 20px;
+  }
+
+  .menu-box > .menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #f8f8f8;
+    text-transform: uppercase;
+    z-index: 1;
+  }
+
+  .menu-box > .mask {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    z-index: 0;
+    background-color: #DE9125;
+    border-radius: 20px;
+    transition: left 0.2s ease-out 0s;
+  }
+</style>
